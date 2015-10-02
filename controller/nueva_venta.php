@@ -33,6 +33,8 @@ require_model('pedido_cliente.php');
 require_model('presupuesto_cliente.php');
 require_model('serie.php');
 require_model('tarifa.php');
+require_model('linea_albaran_cliente.php');
+require_model('linea_factura_cliente.php');
 
 class nueva_venta extends fs_controller
 {
@@ -122,7 +124,14 @@ class nueva_venta extends fs_controller
       }
       else if($this->query != '')
       {
-         $this->new_search();
+          if ( isset($_REQUEST['vendidos']) )
+          {
+              $this->new_search_vendidos();
+          }
+          else
+          {
+              $this->new_search();
+          }
       }
       else if( isset($_POST['referencia4precios']) )
       {
@@ -433,6 +442,75 @@ class nueva_venta extends fs_controller
                   $tarifa->set_precios($this->results);
                }
             }
+         }
+      }
+      
+      header('Content-Type: application/json');
+      echo json_encode($this->results);
+   }
+   
+   private function new_search_vendidos()
+   {
+      /// desactivamos la plantilla HTML
+      $this->template = FALSE;
+      
+      $articulo = new articulo();
+      $linea0 = new linea_factura_cliente();
+      
+      if ( $_POST['tipo'] )
+      {
+        $tlinea = 'linea_'.$_POST['tipo'].'_cliente';
+        $linea0 = new $tlinea();
+      }
+      
+      $codfamilia = '';
+      if( isset($_REQUEST['codfamilia']) )
+      {
+         $codfamilia = $_REQUEST['codfamilia'];
+      }
+      $codfabricante = '';
+      if( isset($_REQUEST['codfabricante']) )
+      {
+         $codfabricante = $_REQUEST['codfabricante'];
+      }
+      $codcliente = '';
+      if( isset($_REQUEST['codcliente']) )
+      {
+         $codcliente = $_REQUEST['codcliente'];
+      }
+      
+      $con_stock = isset($_REQUEST['con_stock']);
+      
+      $linea = $linea0->search_from_cliente($codcliente, $this->query);
+      
+      // Buscamos artículos y los actualizamos con los datos de la línea
+      foreach ($linea as $i => $value) {
+          if ( !$this->results[$i] = $articulo->get($value->referencia) )
+          {
+              $this->results[$i] = new articulo();
+          }
+          $this->results[$i]->descripcion = $value->descripcion;
+          $this->results[$i]->codimpuesto = $value->codimpuesto;
+          $this->results[$i]->descripcion = $value->descripcion;
+          $this->results[$i]->pvp = $value->pvptotal;
+          
+          $this->results[$i]->query = $this->query;
+          $this->results[$i]->dtopor = $value->dtopor;
+          $this->results[$i]->cantidad = $value->cantidad;
+          
+          $this->results[$i]->codtarifa = NULL;
+          $this->results[$i]->tarifa_nombre = NULL;
+          $this->results[$i]->tarifa_url = NULL;
+          $this->results[$i]->tarifa_diff = NULL;
+      }
+      
+      /// ejecutamos las funciones de las extensiones
+      foreach($this->extensions as $ext)
+      {
+         if($ext->type == 'function' AND $ext->params == 'new_search')
+         {
+            $name = $ext->text;
+            $name($this->db, $this->results);
          }
       }
       
