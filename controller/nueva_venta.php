@@ -71,7 +71,7 @@ class nueva_venta extends fs_controller
       $this->grupo = new grupo_clientes();
       $this->pais = new pais();
       
-      /// cargamos la configuración
+      /// cargamos la configuraciÃ³n
       $fsvar = new fs_var();
       $this->nuevocli_setup = $fsvar->array_get(
          array(
@@ -221,7 +221,7 @@ class nueva_venta extends fs_controller
                      }
                   }
                   else
-                     $this->new_error_msg("¡Imposible guardar la dirección del cliente!");  
+                     $this->new_error_msg("Â¡Imposible guardar la direcciÃ³n del cliente!");  
                }
             }
          }
@@ -289,7 +289,7 @@ class nueva_venta extends fs_controller
    
    /**
     * Devuelve los tipos de documentos a guardar,
-    * así para añadir tipos no hay que tocar la vista.
+    * asÃ­ para aÃ±adir tipos no hay que tocar la vista.
     * @return type
     */
    public function tipos_a_guardar()
@@ -404,7 +404,7 @@ class nueva_venta extends fs_controller
       $con_stock = isset($_REQUEST['con_stock']);
       $this->results = $articulo->search($this->query, 0, $codfamilia, $con_stock, $codfabricante);
       
-      /// añadimos la busqueda, el descuento y la cantidad
+      /// aÃ±adimos la busqueda, el descuento y la cantidad
       foreach($this->results as $i => $value)
       {
          $this->results[$i]->query = $this->query;
@@ -481,7 +481,7 @@ class nueva_venta extends fs_controller
       
       $linea = $linea0->search_from_cliente($codcliente, $this->query);
       
-      // Buscamos artículos y los actualizamos con los datos de la línea
+      // Buscamos artÃ­culos y los actualizamos con los datos de la lÃ­nea
       foreach ($linea as $i => $value) {
           if ( !$this->results[$i] = $articulo->get($value->referencia) )
           {
@@ -490,7 +490,7 @@ class nueva_venta extends fs_controller
           $this->results[$i]->descripcion = $value->descripcion;
           $this->results[$i]->codimpuesto = $value->codimpuesto;
           $this->results[$i]->descripcion = $value->descripcion;
-          $this->results[$i]->pvp = $value->pvptotal;
+          $this->results[$i]->pvp = $value->pvpunitario;
           
           $this->results[$i]->query = $this->query;
           $this->results[$i]->dtopor = $value->dtopor;
@@ -564,7 +564,7 @@ class nueva_venta extends fs_controller
       }
       else
       {
-         $this->new_error_msg('Almacén no encontrado.');
+         $this->new_error_msg('AlmacÃ©n no encontrado.');
          $continuar = FALSE;
       }
       
@@ -605,7 +605,7 @@ class nueva_venta extends fs_controller
       
       if( $this->duplicated_petition($_POST['petition_id']) )
       {
-         $this->new_error_msg('Petición duplicada. Has hecho doble clic sobre el botón guardar
+         $this->new_error_msg('PeticiÃ³n duplicada. Has hecho doble clic sobre el botÃ³n guardar
                y se han enviado dos peticiones. Mira en <a href="'.$albaran->url().'">'.FS_ALBARANES.'</a>
                para ver si el '.FS_ALBARAN.' se ha guardado correctamente.');
          $continuar = FALSE;
@@ -698,7 +698,7 @@ class nueva_venta extends fs_controller
                   }
                   else
                   {
-                     $this->new_error_msg("¡Imposible guardar la linea con referencia: ".$linea->referencia);
+                     $this->new_error_msg("Â¡Imposible guardar la linea con referencia: ".$linea->referencia);
                      $continuar = FALSE;
                   }
                }
@@ -730,17 +730,17 @@ class nueva_venta extends fs_controller
                   }
                }
                else
-                  $this->new_error_msg("¡Imposible actualizar el <a href='".$albaran->url()."'>".FS_ALBARAN."</a>!");
+                  $this->new_error_msg("Â¡Imposible actualizar el <a href='".$albaran->url()."'>".FS_ALBARAN."</a>!");
             }
             else if( $albaran->delete() )
             {
                $this->new_message(FS_ALBARAN." eliminado correctamente.");
             }
             else
-               $this->new_error_msg("¡Imposible eliminar el <a href='".$albaran->url()."'>".FS_ALBARAN."</a>!");
+               $this->new_error_msg("Â¡Imposible eliminar el <a href='".$albaran->url()."'>".FS_ALBARAN."</a>!");
          }
          else
-            $this->new_error_msg("¡Imposible guardar el ".FS_ALBARAN."!");
+            $this->new_error_msg("Â¡Imposible guardar el ".FS_ALBARAN."!");
       }
    }
    
@@ -762,7 +762,7 @@ class nueva_venta extends fs_controller
       }
       else
       {
-         $this->new_error_msg('Almacén no encontrado.');
+         $this->new_error_msg('AlmacÃ©n no encontrado.');
          $continuar = FALSE;
       }
       
@@ -803,7 +803,7 @@ class nueva_venta extends fs_controller
       
       if( $this->duplicated_petition($_POST['petition_id']) )
       {
-         $this->new_error_msg('Petición duplicada. Has hecho doble clic sobre el botón guardar
+         $this->new_error_msg('PeticiÃ³n duplicada. Has hecho doble clic sobre el botÃ³n guardar
                y se han enviado dos peticiones. Mira en <a href="'.$factura->url().'">Facturas</a>
                para ver si la factura se ha guardado correctamente.');
          $continuar = FALSE;
@@ -903,7 +903,7 @@ class nueva_venta extends fs_controller
                   }
                   else
                   {
-                     $this->new_error_msg("¡Imposible guardar la linea con referencia: ".$linea->referencia);
+                     $this->new_error_msg("Â¡Imposible guardar la linea con referencia: ".$linea->referencia);
                      $continuar = FALSE;
                   }
                }
@@ -936,17 +936,17 @@ class nueva_venta extends fs_controller
                   }
                }
                else
-                  $this->new_error_msg("¡Imposible actualizar la <a href='".$factura->url()."'>Factura</a>!");
+                  $this->new_error_msg("Â¡Imposible actualizar la <a href='".$factura->url()."'>Factura</a>!");
             }
             else if( $factura->delete() )
             {
                $this->new_message("Factura eliminada correctamente.");
             }
             else
-               $this->new_error_msg("¡Imposible eliminar la <a href='".$factura->url()."'>Factura</a>!");
+               $this->new_error_msg("Â¡Imposible eliminar la <a href='".$factura->url()."'>Factura</a>!");
          }
          else
-            $this->new_error_msg("¡Imposible guardar la Factura!");
+            $this->new_error_msg("Â¡Imposible guardar la Factura!");
       }
    }
    
@@ -987,7 +987,7 @@ class nueva_venta extends fs_controller
       }
       else
       {
-         $this->new_error_msg('Almacén no encontrado.');
+         $this->new_error_msg('AlmacÃ©n no encontrado.');
          $continuar = FALSE;
       }
       
@@ -1028,7 +1028,7 @@ class nueva_venta extends fs_controller
       
       if( $this->duplicated_petition($_POST['petition_id']) )
       {
-         $this->new_error_msg('Petición duplicada. Has hecho doble clic sobre el botón guardar
+         $this->new_error_msg('PeticiÃ³n duplicada. Has hecho doble clic sobre el botÃ³n guardar
                y se han enviado dos peticiones. Mira en <a href="'.$presupuesto->url().'">Presupuestos</a>
                para ver si el presupuesto se ha guardado correctamente.');
          $continuar = FALSE;
@@ -1115,7 +1115,7 @@ class nueva_venta extends fs_controller
                   }
                   else
                   {
-                     $this->new_error_msg("¡Imposible guardar la linea con referencia: ".$linea->referencia);
+                     $this->new_error_msg("Â¡Imposible guardar la linea con referencia: ".$linea->referencia);
                      $continuar = FALSE;
                   }
                }
@@ -1147,17 +1147,17 @@ class nueva_venta extends fs_controller
                   }
                }
                else
-                  $this->new_error_msg("¡Imposible actualizar el <a href='".$presupuesto->url()."'>".FS_PRESUPUESTO."</a>!");
+                  $this->new_error_msg("Â¡Imposible actualizar el <a href='".$presupuesto->url()."'>".FS_PRESUPUESTO."</a>!");
             }
             else if( $presupuesto->delete() )
             {
                $this->new_message(ucfirst(FS_PRESUPUESTO)." eliminado correctamente.");
             }
             else
-               $this->new_error_msg("¡Imposible eliminar el <a href='".$presupuesto->url()."'>".FS_PRESUPUESTO."</a>!");
+               $this->new_error_msg("Â¡Imposible eliminar el <a href='".$presupuesto->url()."'>".FS_PRESUPUESTO."</a>!");
          }
          else
-            $this->new_error_msg("¡Imposible guardar el ".FS_PRESUPUESTO."!");
+            $this->new_error_msg("Â¡Imposible guardar el ".FS_PRESUPUESTO."!");
       }
    }
    
@@ -1179,7 +1179,7 @@ class nueva_venta extends fs_controller
       }
       else
       {
-         $this->new_error_msg('Almacén no encontrado.');
+         $this->new_error_msg('AlmacÃ©n no encontrado.');
          $continuar = FALSE;
       }
       
@@ -1220,7 +1220,7 @@ class nueva_venta extends fs_controller
       
       if( $this->duplicated_petition($_POST['petition_id']) )
       {
-         $this->new_error_msg('Petición duplicada. Has hecho doble clic sobre el botón guardar
+         $this->new_error_msg('PeticiÃ³n duplicada. Has hecho doble clic sobre el botÃ³n guardar
                y se han enviado dos peticiones. Mira en <a href="'.$pedido->url().'">Pedidos</a>
                para ver si el pedido se ha guardado correctamente.');
          $continuar = FALSE;
@@ -1306,7 +1306,7 @@ class nueva_venta extends fs_controller
                   }
                   else
                   {
-                     $this->new_error_msg("¡Imposible guardar la linea con referencia: ".$linea->referencia);
+                     $this->new_error_msg("Â¡Imposible guardar la linea con referencia: ".$linea->referencia);
                      $continuar = FALSE;
                   }
                }
@@ -1338,17 +1338,17 @@ class nueva_venta extends fs_controller
                   }
                }
                else
-                  $this->new_error_msg("¡Imposible actualizar el <a href='".$pedido->url()."'>".FS_PEDIDO."</a>!");
+                  $this->new_error_msg("Â¡Imposible actualizar el <a href='".$pedido->url()."'>".FS_PEDIDO."</a>!");
             }
             else if( $pedido->delete() )
             {
                $this->new_message(ucfirst(FS_PEDIDO)." eliminado correctamente.");
             }
             else
-               $this->new_error_msg("¡Imposible eliminar el <a href='".$pedido->url()."'>".FS_PEDIDO."</a>!");
+               $this->new_error_msg("Â¡Imposible eliminar el <a href='".$pedido->url()."'>".FS_PEDIDO."</a>!");
          }
          else
-            $this->new_error_msg("¡Imposible guardar el ".FS_PEDIDO."!");
+            $this->new_error_msg("Â¡Imposible guardar el ".FS_PEDIDO."!");
       }
    }
 }
